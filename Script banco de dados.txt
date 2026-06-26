@@ -1,0 +1,103 @@
+CREATE TABLE fornecedor
+(
+ id_for serial,
+ nome_for character varying(50),
+ cnpj_for character varying(18),
+ tel_for character varying(15),
+ email_for character varying(50),
+ cep_for character varying(9),
+ rua_for character varying(50),
+ numero_for character varying(10),
+ bairro_for character varying(30),
+ cidade_for character varying(30),
+ estado_for character varying(2),
+ obs_for character varying(100),
+ CONSTRAINT fornecedor_pkey PRIMARY KEY (id_for),
+ CONSTRAINT fornecedor_cnpj_key UNIQUE (cnpj_for)
+);
+ 
+ 
+CREATE TABLE produto
+(
+ id_prod serial,
+ nome_prod character varying(50),
+ tipo_prod character varying(20),
+ peso_prod character varying(10),
+ unidade_prod character varying(20),
+ p_custo_prod double precision,
+ p_venda_prod double precision,
+ estoque_prod integer,
+ CONSTRAINT produto_pkey PRIMARY KEY (id_prod)
+);
+ 
+ 
+CREATE TABLE cliente
+(
+ id_cli serial,
+ nome_cli character varying(50),
+ cpf_cli character varying(14),
+ cnpj_cli character varying(18),
+ responsavel_cli character varying(50),
+ tipo_cli character varying(30),
+ tel_cli character varying(15),
+ email_cli character varying(50),
+ cep_cli character varying(9),
+ rua_cli character varying(50),
+ numero_cli character varying(10),
+ bairro_cli character varying(30),
+ cidade_cli character varying(30),
+ estado_cli character varying(2),
+ CONSTRAINT cliente_pkey PRIMARY KEY (id_cli)
+);
+ 
+ 
+CREATE TABLE entrada_estoque
+(
+ id_ent serial,
+ dat_ent date,
+ qtd_ent integer,
+ id_prod integer,
+ CONSTRAINT entrada_estoque_pkey PRIMARY KEY (id_ent),
+ CONSTRAINT entrada_produto_fk FOREIGN KEY (id_prod) REFERENCES produto (id_prod)
+);
+ 
+ 
+CREATE TABLE venda
+(
+ id_vend serial,
+ dat_vend date,
+ val_total_vend double precision,
+ val_custo_vend double precision,
+ forma_pag_vend character varying(20),
+ status_vend character varying(10),
+ obs_vend character varying(100),
+ id_cli integer,
+ CONSTRAINT venda_pkey PRIMARY KEY (id_vend),
+ CONSTRAINT venda_cliente_fk FOREIGN KEY (id_cli) REFERENCES cliente (id_cli)
+);
+ 
+ 
+CREATE TABLE item_venda
+(
+ id_vend integer,
+ id_prod integer,
+ qtd_item integer,
+ val_unit_item double precision,
+ val_custo_item double precision,
+ CONSTRAINT item_venda_vend_fk FOREIGN KEY (id_vend) REFERENCES venda (id_vend),
+ CONSTRAINT item_venda_prod_fk FOREIGN KEY (id_prod) REFERENCES produto (id_prod)
+);
+
+CREATE TABLE despesa
+(
+    id_desp serial,
+    descricao_desp character varying(100),
+    categoria_desp character varying(20),
+    dat_desp date,
+    val_desp double precision,
+    status_desp character varying(10),
+    obs_desp character varying(100),
+    id_for integer,
+    CONSTRAINT despesa_pkey PRIMARY KEY (id_desp),
+    CONSTRAINT despesa_fornecedor_fk FOREIGN KEY (id_for) REFERENCES fornecedor (id_for)
+);

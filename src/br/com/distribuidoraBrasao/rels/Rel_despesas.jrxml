@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rel_despesas" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="884eeaf5-4b95-42ca-8900-4c9d67e07ce1">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT d.id_desp, d.descricao_desp, d.categoria_desp,
+       d.dat_vencimento_desp, d.val_desp, d.status_desp,
+       d.obs_desp, f.nome_for
+FROM despesa d
+LEFT JOIN fornecedor f ON d.id_for = f.id_for
+ORDER BY d.dat_vencimento_desp ASC, d.status_desp]]>
+	</queryString>
+	<field name="id_desp" class="java.lang.Integer"/>
+	<field name="descricao_desp" class="java.lang.String"/>
+	<field name="categoria_desp" class="java.lang.String"/>
+	<field name="dat_vencimento_desp" class="java.sql.Date"/>
+	<field name="val_desp" class="java.lang.Double"/>
+	<field name="status_desp" class="java.lang.String"/>
+	<field name="obs_desp" class="java.lang.String"/>
+	<field name="nome_for" class="java.lang.String"/>
+	<variable name="totalDespesas" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{val_desp}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="30" uuid="b84c4d31-8242-4212-a9fc-40be1a215389"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Despesas]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="210" height="18" uuid="6457c533-4f1e-44b7-8465-2ef84acc922d"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="0" width="80" height="18" uuid="56027774-0261-40fd-8487-60a170b61e40"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Categoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="0" width="80" height="18" uuid="8e3f5d3b-2be3-4375-b28e-c4c25dcc0896"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vencimento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="0" width="80" height="18" uuid="ddf1fef2-cd9c-4ab1-8f49-9165957bf904"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="0" width="105" height="18" uuid="ac4d3734-f907-4fa1-a848-4dfb8ab78e09"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="19" width="555" height="1" uuid="d3ac10c8-2e22-4659-bb51-37626c85dd83"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="210" height="15" uuid="073fa983-f39c-4333-9168-ee78a2ebbc82"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descricao_desp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="0" width="80" height="15" uuid="a07e9bd7-ae0c-4ea4-96b9-1f05555d64fa"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{categoria_desp}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="290" y="0" width="80" height="15" uuid="78c54854-30ff-4ea5-bd48-3cdf6a729c0f"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dat_vencimento_desp}]]></textFieldExpression>
+			</textField>
+			<textField pattern="R$ #,##0.00">
+				<reportElement x="370" y="0" width="80" height="15" uuid="6b3d9666-d837-48fe-aceb-ba2545e2047f"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{val_desp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="0" width="105" height="15" uuid="ea2556ab-0074-4cb9-bf2a-8d15a6458f8f"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{status_desp}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="40" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="5" width="555" height="1" uuid="b10b21c4-8011-45c9-9357-2e4f7f2c8706"/>
+			</line>
+			<staticText>
+				<reportElement x="270" y="15" width="150" height="20" uuid="2609fa5d-edca-4aa3-a8ad-73b13cb9d460"/>
+				<textElement textAlignment="Right">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total de Despesas :]]></text>
+			</staticText>
+			<textField pattern="R$ #,##0.00">
+				<reportElement x="425" y="15" width="125" height="20" uuid="4366cd48-719f-4e50-acdc-da272d2083c3"/>
+				<textElement textAlignment="Right">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalDespesas}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

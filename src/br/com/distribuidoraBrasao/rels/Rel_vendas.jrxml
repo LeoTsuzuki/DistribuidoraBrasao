@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rel_vendas" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a1b2c3d4-1111-2222-3333-444455556666">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT v.id_vend, v.dat_vend, c.nome_cli, v.val_total_vend, v.val_custo_vend,
+       (v.val_total_vend - v.val_custo_vend) AS lucro_vend,
+       i.qtd_item, i.val_unit_item, p.nome_prod
+FROM venda v, cliente c, item_venda i, produto p
+WHERE v.id_cli = c.id_cli
+AND i.id_vend = v.id_vend
+AND i.id_prod = p.id_prod
+ORDER BY v.dat_vend DESC, v.id_vend]]>
+	</queryString>
+	<field name="id_vend" class="java.lang.Integer"/>
+	<field name="dat_vend" class="java.sql.Date"/>
+	<field name="nome_cli" class="java.lang.String"/>
+	<field name="val_total_vend" class="java.lang.Double"/>
+	<field name="val_custo_vend" class="java.lang.Double"/>
+	<field name="lucro_vend" class="java.lang.Double"/>
+	<field name="qtd_item" class="java.lang.Integer"/>
+	<field name="val_unit_item" class="java.lang.Double"/>
+	<field name="nome_prod" class="java.lang.String"/>
+	<variable name="totalGeralVendas" class="java.lang.Double" resetType="Group" resetGroup="grupoVenda" calculation="First">
+		<variableExpression><![CDATA[$F{val_total_vend}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
+	</variable>
+	<variable name="totalGeral" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$V{totalGeralVendas}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
+	</variable>
+	<group name="grupoVenda">
+		<groupExpression><![CDATA[$F{id_vend}]]></groupExpression>
+		<groupHeader>
+			<band height="35" splitType="Stretch">
+				<staticText>
+					<reportElement x="0" y="0" width="60" height="15" uuid="b1111111-0000-0000-0000-000000000001"/>
+					<textElement>
+						<font size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Venda Nº :]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="60" y="0" width="40" height="15" uuid="b1111111-0000-0000-0000-000000000002"/>
+					<textElement>
+						<font size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{id_vend}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="110" y="0" width="70" height="15" uuid="b1111111-0000-0000-0000-000000000003"/>
+					<textElement>
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dat_vend}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="190" y="0" width="200" height="15" uuid="b1111111-0000-0000-0000-000000000004"/>
+					<textElement>
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nome_cli}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="5" y="18" width="100" height="15" uuid="b1111111-0000-0000-0000-000000000005"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Produto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="320" y="18" width="60" height="15" uuid="b1111111-0000-0000-0000-000000000006"/>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Qtd]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="420" y="18" width="130" height="15" uuid="b1111111-0000-0000-0000-000000000007"/>
+					<textElement textAlignment="Right">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Vlr Unitário]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="33" width="555" height="1" uuid="b1111111-0000-0000-0000-000000000008"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="20" splitType="Stretch">
+				<staticText>
+					<reportElement x="320" y="0" width="100" height="15" uuid="b2222222-0000-0000-0000-000000000001"/>
+					<textElement textAlignment="Right">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total da Venda :]]></text>
+				</staticText>
+				<textField pattern="R$ #,##0.00">
+					<reportElement x="425" y="0" width="125" height="15" uuid="b2222222-0000-0000-0000-000000000002"/>
+					<textElement textAlignment="Right">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{val_total_vend}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="30" uuid="c1111111-0000-0000-0000-000000000001"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Vendas]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="5" y="0" width="310" height="15" uuid="d1111111-0000-0000-0000-000000000001"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome_prod}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="320" y="0" width="60" height="15" uuid="d1111111-0000-0000-0000-000000000002"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qtd_item}]]></textFieldExpression>
+			</textField>
+			<textField pattern="R$ #,##0.00">
+				<reportElement x="420" y="0" width="130" height="15" uuid="d1111111-0000-0000-0000-000000000003"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{val_unit_item}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="40" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="5" width="555" height="1" uuid="f1111111-0000-0000-0000-000000000001"/>
+			</line>
+			<staticText>
+				<reportElement x="270" y="15" width="150" height="20" uuid="f1111111-0000-0000-0000-000000000002"/>
+				<textElement textAlignment="Right">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Vendido :]]></text>
+			</staticText>
+			<textField pattern="R$ #,##0.00">
+				<reportElement x="425" y="15" width="125" height="20" uuid="f1111111-0000-0000-0000-000000000003"/>
+				<textElement textAlignment="Right">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalGeral}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
