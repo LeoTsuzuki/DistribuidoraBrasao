@@ -109,25 +109,25 @@ Abra o projeto no NetBeans e execute a classe principal `DistribuidoraBrasao.jav
 ![Tela Principal](screenshots/01-tela-principal.png)
 
 ### Menu Relatórios
-![Menu Relatórios](screenshots/02-tela-principal-relatorios.png)
+![Menu Relatórios](screenshots/08-cliente.png)
 
 ### Gerenciador de Vendas
-![Gerenciador de Vendas](screenshots/04-gerenciador-vendas.png)
+![Gerenciador de Vendas](screenshots/06-produto.png)
 
 ### Gerenciador de Despesas
 ![Gerenciador de Despesas](screenshots/05-gerenciador-despesas.png)
 
 ### Gerenciador de Estoque
-![Gerenciador de Estoque](screenshots/03-gerenciador-estoque.png)
+![Gerenciador de Estoque](screenshots/07-fornecedor.png)
 
 ### Cadastro de Produto
-![Produto](screenshots/06-produto.png)
+![Produto](screenshots/04-gerenciador-vendas.png)
 
 ### Cadastro de Fornecedor
-![Fornecedor](screenshots/07-fornecedor.png)
+![Fornecedor](screenshots/03-gerenciador-estoque.png)
 
 ### Cadastro de Cliente
-![Cliente](screenshots/08-cliente.png)
+![Cliente](screenshots/02-tela-principal-relatorios.png)
 
 ---
 
